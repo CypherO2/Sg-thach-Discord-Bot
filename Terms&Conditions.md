@@ -1,4 +1,4 @@
-## Terms of Use for Discord Bot:
+# Terms of Use for Sgàthach Discord Bot:
 
 Welcome to Sgàthach! Before you start using our services, please carefully read and agree to the following terms of use:
 
