@@ -18,14 +18,18 @@ Sgàthach is a versatile Python-based Discord bot designed to enhance your serve
 
 - GitHub Integration: Stay updated on project developments with real-time alerts for GitHub commits from specified repositories, keeping your community informed and involved.
 
-Installation:
+## Installation:
 
 To bring Sgàthach to your server, simply follow the easy setup instructions in the documentation. Customize its features to suit your community's needs and watch as Sgàthach transforms your Discord server experience.
-Contributing:
+
+## Contributing:
 
 We welcome contributions from the community to make Sgàthach even more powerful and versatile. Whether you're a developer, designer, or enthusiast, there are plenty of opportunities to get involved and help shape the future of Sgàthach.
-Support:
 
-For any questions, issues, or suggestions, feel free to join our Discord server or open an issue on GitHub. Our dedicated team is here to assist you and ensure that Sgàthach meets your expectations.
+## Support:
+
+For any questions, issues, or suggestions, feel free to join our [Discord server]() or open an issue on GitHub. Our dedicated team is here to assist you and ensure that Sgàthach meets your expectations.
 
 Elevate your Discord server with Sgàthach today!
+
+## Licence
