@@ -12,7 +12,7 @@ import functions as F
 from dotenv import load_dotenv
 
 block_links = ["discord.gg"]
-
+kys_chain = ["kys", "kill yourself"]
 admin_chat = 1234227629352288275
 bot_log1 = 1234227629557547029
 bot_log2 = 1234227628924207283
@@ -182,6 +182,24 @@ async def Rules(interaction: discord.Interaction) -> None:
         await interaction.response.send_message(embed=embed)
 
 
+@Client.tree.command(name="help", description="need some help?")
+async def help(interaction: discord.Interaction) -> None:
+    embed = discord.Embed(
+        title="**Cassiopeia Support / Development - Help Centre**",
+        color=0x5A0C8A,
+    )
+    embed.add_field(
+        name="Commands",
+        value=f"**/alert** - Do you need to report an issue?\n**/hello** - Say hello to Sgathach\n**/info** - need some server information?\n**/roll [number of dice] [dice value]** - Sgathach will roll you some dice\n**/say** - Get Sgathach to say something for you!\n**statroll** - Sgathach will roll you stats for DnD\n**/tellmeajoke** - get a dad joke",
+        inline=False,
+    )
+    embed.add_field(
+        name="Other Notices",
+        value=f"**please note that this server is a primarily English speaking server, and while we have no issue with other languages, to regulate the moderation and to keep other in the loop with ask that you speak in English within the server**",
+        inline=False,
+    )
+
+
 @Client.event
 async def on_message(msg) -> None:
     channel = Client.get_channel(admin_chat)
@@ -198,18 +216,16 @@ async def on_message(msg) -> None:
                     )
                     await msg.delete()
                     await channel.send(embed=embed)
-            for text in block_links:
-                if "staff" not in str(msg.author.roles) and text in str(
-                    msg.content.lower()
-                ):
-                    embed = discord.Embed(
-                        title="**ALERT!**",
-                        description=f"In: {msg.channel.mention}\nReason: {msg.author} sent a link!\n<@&1222504650398240780>",
-                        color=0x5A0C8A,
-                        timestamp=datetime.datetime.now(),
+            if Client.user in msg.mentions:
+                if "kys" in msg.content:
+                    await msg.channel.send(
+                        "https://tenor.com/view/reverse-card-uno-uno-cards-gif-13032597"
                     )
-                    await msg.delete()
-                    await channel.send(embed=embed)
+                if "kill yourself" in msg.content:
+                    await msg.channel.send(
+                        "https://tenor.com/view/reverse-card-uno-uno-cards-gif-13032597"
+                    )
+
         if msg.content.lower() == "e":
             reaction = "💀"
             await msg.add_reaction(reaction)
