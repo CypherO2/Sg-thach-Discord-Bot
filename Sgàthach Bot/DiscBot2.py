@@ -219,11 +219,11 @@ async def on_message(msg) -> None:
             if Client.user in msg.mentions:
                 if "kys" in msg.content:
                     await msg.channel.send(
-                        "https://tenor.com/view/reverse-card-uno-uno-cards-gif-13032597"
+                        "https://tenor.com/view/water-cat-cat-cat-bath-gif-8375496536506751533"
                     )
                 if "kill yourself" in msg.content:
                     await msg.channel.send(
-                        "https://tenor.com/view/reverse-card-uno-uno-cards-gif-13032597"
+                        "https://tenor.com/view/water-cat-cat-cat-bath-gif-8375496536506751533"
                     )
 
         if msg.content.lower() == "e":
