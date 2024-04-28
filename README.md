@@ -28,7 +28,7 @@ We welcome contributions from the community to make Sgàthach even more powerful
 
 ## Support:
 
-For any questions, issues, or suggestions, feel free to join our [Discord server]() or open an issue on GitHub. Our dedicated team is here to assist you and ensure that Sgàthach meets your expectations.
+For any questions, issues, or suggestions, feel free to join our [Discord server](https://discord.gg/VRE7H7mNVU) or open an issue on GitHub. Our dedicated team is here to assist you and ensure that Sgàthach meets your expectations.
 
 Elevate your Discord server with Sgàthach today!
 
