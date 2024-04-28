@@ -11,15 +11,24 @@ import requests
 import functions as F
 from dotenv import load_dotenv
 
-block_links = ["http://", "https://", "discord.gg"]
+block_links = ["discord.gg"]
 
-admin_chat = 1222504650398240788
-welcome_channel = 1222504650763403309
+admin_chat = 1234227629352288275
+bot_log1 = 1234227629557547029
+bot_log2 = 1234227628924207283
+welcome_channel = 1234227629180325942
+
+boot_msg = "[Sgàthach] Booted Successfully!"
+
 
 load_dotenv()
 TOKEN: Final[str] = os.getenv("DISCORD_TOKEN")
 DESC: Final[str] = os.getenv("BOT_DESCRIPTION")
-LINKS: Final[str] = os.getenv("USEFUL_LINKS")
+link1 = os.getenv("LINK1")
+link2 = os.getenv("LINK2")
+link3 = os.getenv("LINK3")
+link4 = os.getenv("LINK4")
+master_link = f"{link1}\n{link2}\n{link3}\n{link4}"
 
 intents = discord.Intents().all()
 intents.message_content = True
@@ -30,23 +39,28 @@ Client = commands.Bot(command_prefix="$", intents=intents)
 async def on_member_join(member):
     channel = Client.get_channel(welcome_channel)
     embed = discord.Embed(
-        description=f":wave:Welcome {member.mention} to Cassiopeia Developments!",
+        description=f":wave:Welcome {member.mention} to the Cassi Support Server!!",
         color=0x5A0C8A,
         timestamp=datetime.datetime.now(),
     )
-    role = discord.utils.get(member.guild.roles, name="Users")
+    role = discord.utils.get(member.guild.roles, name="Members")
     await member.add_roles(role)
     await channel.send(embed=embed)
 
 
 @Client.event
 async def on_ready() -> None:
-    print(f"{Client.user} is Ready")
+    channel1 = Client.get_channel(bot_log1)
+    channel2 = Client.get_channel(bot_log2)
+    print(boot_msg)
     try:
         synced = await Client.tree.sync()
-        print(f"Synced {len(synced)} command(s)")
+        command_amount = f"[Sgàthach] Synced with {len(synced)} command(s)"
+        print(command_amount)
     except Exception as e:
         print("An Error Occured:\n", e)
+    await channel1.send(f"{boot_msg}\n{command_amount}")
+    await channel2.send(f"{boot_msg}\n{command_amount}")
 
 
 @Client.tree.command(name="hello", description="Say Hello to Sgàthach!")
@@ -63,7 +77,7 @@ async def info(interaction: discord.Interaction):
     )
     embedVar.add_field(
         name="Useful Links",
-        value=LINKS,
+        value=master_link,
         inline=False,
     )
     await interaction.response.send_message(embed=embedVar)
@@ -138,48 +152,39 @@ async def DadJoke(interaction: discord.Interaction):
 
 @Client.tree.command(name="rules", description="Want to know the rules?")
 async def Rules(interaction: discord.Interaction) -> None:
-    if interaction.user != Client.user:
-        await interaction.response.send_message(
-            f"You Cannot Use This Command", ephemeral=True
-        )
-    else:
-        with open(r"rules.txt") as rulesBlock:
-            rulesBlock = rulesBlock.read().split(",")
-            rules = ""
-            count = 0
-            for i in rulesBlock:
-                count += 1
-                rules += f"\n{count}) {i}"
-                embed = discord.Embed(
-                    title="**Cassiopeia Development - Rules**",
-                    description=f"Welcome to Cassiopeia Developments!\n While in this server you will have to follow a series of rules:{rules}",
-                    color=0x5A0C8A,
-                )
-                embed.add_field(
-                    name="Other Notices",
-                    value=f"The staff team reserve the right to act without something being a direct violation of the rules. If something happens that they deem is wrong, they can step in.",
-                    inline=False,
-                )
-                embed.add_field(
-                    name="Other Notices",
-                    value=f"**please note that this server is a primarily English speaking server, and while we have no issue with other languages, to regulate the moderation and to keep other in the loop with ask that you speak in English within the server**",
-                    inline=False,
-                )
-            await interaction.response.send_message(embed=embed)
-
-
-#     embed = discord.Embed(
-#     title="**ALERT!**",
-#     description=f"In: {msg.channel.mention}\nReason: {issue}\n<@&1222504650398240780>",
-#     color=0x5A0C8A,
-#     timestamp=datetime.datetime.now(),
-# )
+    # if interaction.user != Client.user:
+    #     await interaction.response.send_message(
+    #         f"You Cannot Use This Command", ephemeral=True
+    #     )
+    # else:
+    with open(r"rules.txt") as rulesBlock:
+        rulesBlock = rulesBlock.read().split(",")
+        rules = ""
+        count = 0
+        for i in rulesBlock:
+            count += 1
+            rules += f"\n{count}) {i}"
+            embed = discord.Embed(
+                title="**Cassiopeia Development - Rules**",
+                description=f"Welcome to Cassiopeia Developments!\n While in this server you will have to follow a series of rules:{rules}",
+                color=0x5A0C8A,
+            )
+            embed.add_field(
+                name="Other Notices",
+                value=f"The staff team reserve the right to act without something being a direct violation of the rules. If something happens that they deem is wrong, they can step in.",
+                inline=False,
+            )
+            embed.add_field(
+                name="Other Notices",
+                value=f"**please note that this server is a primarily English speaking server, and while we have no issue with other languages, to regulate the moderation and to keep other in the loop with ask that you speak in English within the server**",
+                inline=False,
+            )
+        await interaction.response.send_message(embed=embed)
 
 
 @Client.event
 async def on_message(msg) -> None:
     channel = Client.get_channel(admin_chat)
-
     with open(r"blocked_words.txt") as block_list:
         block_list = block_list.read().strip().split()
         if msg.author != Client.user:
