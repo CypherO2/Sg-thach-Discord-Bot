@@ -18,6 +18,9 @@ bot_log1 = 1234227629557547029
 bot_log2 = 1234227628924207283
 welcome_channel = 1234227629180325942
 
+StartTime = datetime.now()
+current_time = StartTime.strftime("%d/%m/%Y %H:%M:%S")
+
 boot_msg = "[Sgàthach] Booted Successfully!"
 
 
@@ -89,6 +92,13 @@ async def Say(interaction: discord.Interaction, thing_to_say: str):
     await interaction.response.send_message(
         f"{interaction.user.name} said: '{thing_to_say}'"
     )
+
+
+@Client.tree.command(name="uptime", description="How long has the bot been online?")
+async def Uptime(interaction : discord.Interaction) -> None:
+    now = datetime.now()
+    time_elapsed = now - StartTime
+    await interaction.response.send_message(f"As of {now}\n Time Elapsed is: {time_elapsed}", ephemeral=True)
 
 
 @Client.tree.command(name="roll", description="Ask me to roll a dice!")
