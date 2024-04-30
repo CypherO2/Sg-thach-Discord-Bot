@@ -198,7 +198,9 @@ async def Rules(interaction: discord.Interaction) -> None:
 
 @Client.tree.command(name="doaflip", description="DO A FLIP!!!!")
 async def Flip(interactin: discord.Interaction) -> None:
-    with open(r"Sg-thach-Discord-Bot\Sgàthach Bot\do-a-flp.txt") as FlipsFile:
+    with open(
+        r"E:\Sgàthach Bot\Sg-thach-Discord-Bot\Sgàthach Bot\do-a-flp.txt"
+    ) as FlipsFile:
         FlipsList = FlipsFile.read().split(",")
         flip = random.choice(FlipsList)
         await interactin.response.send_message(flip)
@@ -225,8 +227,10 @@ async def help(interaction: discord.Interaction) -> None:
 @Client.event
 async def on_message(msg) -> None:
     channel = Client.get_channel(admin_chat)
-    with open(r"Sg-thach-Discord-Bot\Sgàthach Bot\blocked_words.txt") as block_list:
-        block_list = block_list.read().strip().split()
+    with open(
+        r"E:\Sgàthach Bot\Sg-thach-Discord-Bot\Sgàthach Bot\blocked_words.txt"
+    ) as block_list:
+        block_list = block_list.read().split(",")
         if msg.author != Client.user:
             for text in block_list:
                 if text in str(msg.content.lower()):
