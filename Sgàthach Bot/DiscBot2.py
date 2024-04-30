@@ -1,9 +1,11 @@
 import discord
 from typing import Final
+import random
 from random import choice, randint
 from discord import *
 import asyncio
 import datetime
+from datetime import datetime
 import discord.ext
 from discord.ext import commands
 import os
@@ -21,7 +23,7 @@ welcome_channel = 1234227629180325942
 StartTime = datetime.now()
 current_time = StartTime.strftime("%d/%m/%Y %H:%M:%S")
 
-boot_msg = "[Sgàthach] Booted Successfully!"
+boot_msg = f"[Sgàthach] Booted Successfully @ {current_time}!"
 
 
 load_dotenv()
@@ -95,10 +97,12 @@ async def Say(interaction: discord.Interaction, thing_to_say: str):
 
 
 @Client.tree.command(name="uptime", description="How long has the bot been online?")
-async def Uptime(interaction : discord.Interaction) -> None:
+async def Uptime(interaction: discord.Interaction) -> None:
     now = datetime.now()
     time_elapsed = now - StartTime
-    await interaction.response.send_message(f"As of {now}\n Time Elapsed is: {time_elapsed}", ephemeral=True)
+    await interaction.response.send_message(
+        f"As of {now}\n Time Elapsed is: {time_elapsed}", ephemeral=True
+    )
 
 
 @Client.tree.command(name="roll", description="Ask me to roll a dice!")
@@ -192,6 +196,14 @@ async def Rules(interaction: discord.Interaction) -> None:
         await interaction.response.send_message(embed=embed)
 
 
+@Client.tree.command(name="doaflip", description="DO A FLIP!!!!")
+async def Flip(interactin: discord.Interaction) -> None:
+    with open(r"Sg-thach-Discord-Bot\Sgàthach Bot\do-a-flp.txt") as FlipsFile:
+        FlipsList = FlipsFile.read().split(",")
+        flip = random.choice(FlipsList)
+        await interactin.response.send_message(flip)
+
+
 @Client.tree.command(name="help", description="need some help?")
 async def help(interaction: discord.Interaction) -> None:
     embed = discord.Embed(
@@ -213,7 +225,7 @@ async def help(interaction: discord.Interaction) -> None:
 @Client.event
 async def on_message(msg) -> None:
     channel = Client.get_channel(admin_chat)
-    with open(r"blocked_words.txt") as block_list:
+    with open(r"Sg-thach-Discord-Bot\Sgàthach Bot\blocked_words.txt") as block_list:
         block_list = block_list.read().strip().split()
         if msg.author != Client.user:
             for text in block_list:
