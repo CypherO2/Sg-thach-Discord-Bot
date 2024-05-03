@@ -188,11 +188,6 @@ async def Rules(interaction: discord.Interaction) -> None:
                     value=f"The staff team reserve the right to act without something being a direct violation of the rules. If something happens that they deem is wrong, they can step in.",
                     inline=False,
                 )
-                embed.add_field(
-                    name="Other Notices",
-                    value=f"**please note that this server is a primarily English speaking server, and while we have no issue with other languages, to regulate the moderation and to keep other in the loop with ask that you speak in English within the server**",
-                    inline=False,
-                )
             await interaction.response.send_message(embed=embed)
 
 
