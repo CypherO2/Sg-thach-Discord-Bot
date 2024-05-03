@@ -23,7 +23,7 @@ welcome_channel = 1234227629180325942
 StartTime = datetime.now()
 current_time = StartTime.strftime("%d/%m/%Y %H:%M:%S")
 
-boot_msg = f"[Sgàthach] Booted Successfully @ {current_time}!"
+boot_msg = f"[Sgàthach] Booted Successfully @ {current_time} GMT+00:00!"
 
 
 load_dotenv()
@@ -166,34 +166,34 @@ async def DadJoke(interaction: discord.Interaction):
 
 @Client.tree.command(name="rules", description="Want to know the rules?")
 async def Rules(interaction: discord.Interaction) -> None:
-    # if interaction.user != Client.user:
-    #     await interaction.response.send_message(
-    #         f"You Cannot Use This Command", ephemeral=True
-    #     )
-    # else:
-    with open(r"rules.txt") as rulesBlock:
-        rulesBlock = rulesBlock.read().split(",")
-        rules = ""
-        count = 0
-        for i in rulesBlock:
-            count += 1
-            rules += f"\n{count}) {i}"
-            embed = discord.Embed(
-                title="**Cassiopeia Development - Rules**",
-                description=f"Welcome to Cassiopeia Developments!\n While in this server you will have to follow a series of rules:{rules}",
-                color=0x5A0C8A,
-            )
-            embed.add_field(
-                name="Other Notices",
-                value=f"The staff team reserve the right to act without something being a direct violation of the rules. If something happens that they deem is wrong, they can step in.",
-                inline=False,
-            )
-            embed.add_field(
-                name="Other Notices",
-                value=f"**please note that this server is a primarily English speaking server, and while we have no issue with other languages, to regulate the moderation and to keep other in the loop with ask that you speak in English within the server**",
-                inline=False,
-            )
-        await interaction.response.send_message(embed=embed)
+    if interaction.user != Client.user:
+        await interaction.response.send_message(
+            f"You Cannot Use This Command", ephemeral=True
+        )
+    else:
+        with open(r"rules.txt") as rulesBlock:
+            rulesBlock = rulesBlock.read().split(",")
+            rules = ""
+            count = 0
+            for i in rulesBlock:
+                count += 1
+                rules += f"\n{count}) {i}"
+                embed = discord.Embed(
+                    title="**Cassiopeia Development - Rules**",
+                    description=f"Welcome to Cassiopeia Developments!\n While in this server you will have to follow a series of rules:{rules}",
+                    color=0x5A0C8A,
+                )
+                embed.add_field(
+                    name="Other Notices",
+                    value=f"The staff team reserve the right to act without something being a direct violation of the rules. If something happens that they deem is wrong, they can step in.",
+                    inline=False,
+                )
+                embed.add_field(
+                    name="Other Notices",
+                    value=f"**please note that this server is a primarily English speaking server, and while we have no issue with other languages, to regulate the moderation and to keep other in the loop with ask that you speak in English within the server**",
+                    inline=False,
+                )
+            await interaction.response.send_message(embed=embed)
 
 
 @Client.tree.command(name="doaflip", description="DO A FLIP!!!!")
