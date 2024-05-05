@@ -91,9 +91,24 @@ async def info(interaction: discord.Interaction):
 @Client.tree.command(name="say", description="What do you want to say?")
 @app_commands.describe(thing_to_say="What should I say?")
 async def Say(interaction: discord.Interaction, thing_to_say: str):
-    await interaction.response.send_message(
-        f"{interaction.user.name} said: '{thing_to_say}'"
-    )
+    inlist = False
+    with open(
+        r"E:\Sgàthach Bot\Sg-thach-Discord-Bot\Sgàthach Bot\blocked_words.txt"
+    ) as block_list:
+        block_list = set(block_list.read().split(","))
+        words = set(thing_to_say.split())
+        intersection = words & block_list
+        print(
+            f"Method A: Sentence {thing_to_say[:7]}... contains bad words: {bool(intersection)}, {intersection}"
+        )
+        if bool(intersection):
+            await interaction.response.send_message(
+                f"{interaction.user.mention} YOU CANNOT SAY THAT!!!"
+            )
+        else:
+            await interaction.response.send_message(
+                f"{interaction.user.name} said: '{thing_to_say}'", ephemeral=True
+            )
 
 
 @Client.tree.command(name="uptime", description="How long has the bot been online?")
@@ -188,6 +203,11 @@ async def Rules(interaction: discord.Interaction) -> None:
                     value=f"The staff team reserve the right to act without something being a direct violation of the rules. If something happens that they deem is wrong, they can step in.",
                     inline=False,
                 )
+                embed.add_field(
+                    name="Other Notices",
+                    value=f"**please note that this server is a primarily English speaking server, and while we have no issue with other languages, to regulate the moderation and to keep other in the loop with ask that you speak in English within the server**",
+                    inline=False,
+                )
             await interaction.response.send_message(embed=embed)
 
 
@@ -212,11 +232,7 @@ async def help(interaction: discord.Interaction) -> None:
         value=f"**/alert** - Do you need to report an issue?\n**/hello** - Say hello to Sgathach\n**/info** - need some server information?\n**/roll [number of dice] [dice value]** - Sgathach will roll you some dice\n**/say** - Get Sgathach to say something for you!\n**statroll** - Sgathach will roll you stats for DnD\n**/tellmeajoke** - get a dad joke",
         inline=False,
     )
-    embed.add_field(
-        name="Other Notices",
-        value=f"**please note that this server is a primarily English speaking server, and while we have no issue with other languages, to regulate the moderation and to keep other in the loop with ask that you speak in English within the server**",
-        inline=False,
-    )
+    await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
 @Client.event
@@ -250,6 +266,17 @@ async def on_message(msg) -> None:
         if msg.content.lower() == "e":
             reaction = "💀"
             await msg.add_reaction(reaction)
+
+
+@Client.event
+async def on_command(ctx) -> None:
+    print(ctx.command.name + " was invoked")
+
+
+@Client.event
+async def on_command_event(ctx, error) -> None:
+    print(ctx.command.name + " was invoked incorrectly")
+    print(error)
 
 
 Client.run(TOKEN)
