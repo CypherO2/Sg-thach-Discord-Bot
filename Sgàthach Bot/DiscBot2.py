@@ -98,9 +98,9 @@ async def Say(interaction: discord.Interaction, thing_to_say: str):
         block_list = set(block_list.read().split(","))
         words = set(thing_to_say.split())
         intersection = words & block_list
-        print(
-            f"Method A: Sentence {thing_to_say[:7]}... contains bad words: {bool(intersection)}, {intersection}"
-        )
+        # print(
+        #     f"Method A: Sentence {thing_to_say[:7]}... contains bad words: {bool(intersection)}, {intersection}"
+        # )
         if bool(intersection):
             await interaction.response.send_message(
                 f"{interaction.user.mention} YOU CANNOT SAY THAT!!!"
@@ -220,6 +220,7 @@ async def Flip(interactin: discord.Interaction) -> None:
         flip = random.choice(FlipsList)
         await interactin.response.send_message(flip)
 
+# @Client.tree.command(name="purge", description="remove some messages?")
 
 @Client.tree.command(name="help", description="need some help?")
 async def help(interaction: discord.Interaction) -> None:
